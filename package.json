@@ -1,0 +1,28 @@
+{
+  "name": "jobaggregator",
+  "version": "1.0.0",
+  "description": "This app fetches and extracts job postings from accross multiple sources",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgusSaravia/jobaggregator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AgusSaravia/jobaggregator/issues"
+  },
+  "homepage": "https://github.com/AgusSaravia/jobaggregator#readme",
+  "devDependencies": {
+    "@types/node": "^26.3.0",
+    "typescript": "^7.0.2"
+  }
+}

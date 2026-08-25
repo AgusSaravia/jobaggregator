@@ -2,13 +2,15 @@
   "name": "jobaggregator",
   "version": "1.0.0",
   "description": "This app fetches and extracts job postings from accross multiple sources",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch:ts": "tsc -w -p tsconfig.json",
+    "watch:node": "node --watch dist/index.js",
+    "dev": "concurrently \"npm run watch:ts\" \"npm run watch:node\""
   },
   "repository": {
     "type": "git",

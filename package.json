@@ -25,6 +25,7 @@
   "homepage": "https://github.com/AgusSaravia/jobaggregator#readme",
   "devDependencies": {
     "@types/node": "^26.3.0",
+    "concurrently": "^10.0.5",
     "typescript": "^7.0.2"
   }
 }

@@ -8,6 +8,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "watch:ts": "tsc -w -p tsconfig.json",
     "watch:node": "node --watch dist/index.js",
     "dev": "concurrently \"npm run watch:ts\" \"npm run watch:node\""

@@ -15,9 +15,8 @@
         "outDir": "./dist/",
         "lib": [
             "es2025", "dom"
-        ]
-        
-    },  
+        ],
+        "types": ["node"]},  
     "include": ["src/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts"]
 }

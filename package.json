@@ -8,6 +8,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "watch:ts": "tsc -w -p tsconfig.json",
     "watch:node": "node --watch dist/index.js",
     "dev": "concurrently \"npm run watch:ts\" \"npm run watch:node\""
@@ -24,8 +25,12 @@
   },
   "homepage": "https://github.com/AgusSaravia/jobaggregator#readme",
   "devDependencies": {
+    "@types/html-to-text": "^9.0.4",
     "@types/node": "^26.3.0",
     "concurrently": "^10.0.5",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "html-to-text": "^10.0.1"
   }
 }

@@ -1,5 +1,7 @@
 
-export interface RemotiveResponse { 
+export interface RemotiveApiResponseSchema {
+    "job-count": number,
+    "total-job-count": number
     jobs: RemotiveJobPost[]
 }
 export interface RemotiveJobPost { 
@@ -13,6 +15,6 @@ export interface RemotiveJobPost {
     job_type: string
     publication_date: string
     candidate_required_location: string
-    salary: string
+    salary?: string
     description: string
 }

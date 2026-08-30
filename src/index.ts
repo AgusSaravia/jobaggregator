@@ -1,5 +1,5 @@
 import http from "node:http"
-import { formatRemotiveJobCard } from "./services/remotive.js"
+import { getRemotiveJobs } from "./services/remotive.js"
 const urls = {
     "Remotive": "https://remotive.com/api/remote-jobs?category=software-dev&limit=5",
     "Arbeitnow": "https://www.arbeitnow.com/api/job-board-api",
@@ -10,7 +10,7 @@ const urls = {
 
 const server = http.createServer(async (req, res) => {
     try {
-        const remotiveJobCard = await formatRemotiveJobCard()
+        const remotiveJob = await getRemotiveJobs()
 
         res.writeHead(200, {
             "content-type": "application/json"
@@ -18,7 +18,7 @@ const server = http.createServer(async (req, res) => {
 
         res.end(
             JSON.stringify({
-                remotiveJobCard
+                remotiveJob
             })
         )
     } catch (error) {

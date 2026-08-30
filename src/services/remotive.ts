@@ -1,34 +1,43 @@
-import { count } from "node:console"
-import { fetchJobs, setErrorMessage, stripHTMLTags } from "../helpers/helpers.js"
-import type { RemotiveApiResponseSchema } from "../types/index.js"
+import z from "zod"
+import { stripHTMLTags } from "../helpers/text/strip-html.js"
+import { RemotiveApiResponseSchema, RemotiveJobPostSchema } from "../schemas/remotive-schema.js"
+import { fetchListings } from "../helpers/http/fetch-listings.js"
+import type { JobPost, RemotiveJobPost } from "../types/index.js"
 const REMOTIVE_CATEGORY = "software-dev"
 const JOB_LIMIT = 5
-const REMOTIVE_URL =  `https://remotive.com/api/remote-jobs?category=${REMOTIVE_CATEGORY}&limit=${JOB_LIMIT}`
+const REMOTIVE_URL = `https://remotive.com/api/remote-jobs?category=${REMOTIVE_CATEGORY}&limit=${JOB_LIMIT}`
 
 
-const isRemotiveRespose = (data: unknown): data is RemotiveApiResponseSchema => {
-    return(
-        typeof data === 'object' && 
-        data !== null && 
-        "jobs" in data && 
-        Array.isArray(data.jobs)
-    )
-}
-const getRemotiveJobs = async () =>{
-    const remotiveResponse = await fetchJobs(REMOTIVE_URL)
-    if (!isRemotiveRespose(remotiveResponse)) {
-        throw new Error("Cannot GET Remotive job list")
-    }   
 
-    return remotiveResponse.jobs
-}
+export const getRemotiveJobs = async (): Promise<JobPost[]> => {
+    const remotiveResponseBody = await fetchListings(REMOTIVE_URL)
+    const remotiveApiResponse = RemotiveApiResponseSchema.safeParse(remotiveResponseBody)
 
-export const formatRemotiveJobCard = async ()=> {
-    const jobListings = await getRemotiveJobs()
-    return jobListings.map(job => {
-        return {
-            ...job,
-           description: stripHTMLTags(job.description)
-        }
+    if (!remotiveApiResponse.success) {
+        throw new Error(`Cannot get list of jobs from Remotive: ${z.prettifyError(remotiveApiResponse.error)}`)
+    }
+    return remotiveApiResponse.data.jobs.flatMap(job => {
+        const validatedJobPost = RemotiveJobPostSchema.safeParse(job)
+        if (!validatedJobPost.success) return []
+        return [remotiveJobToJobPost(validatedJobPost.data)]
     })
+}
+
+//Transforms Remotive to our portal 
+const remotiveJobToJobPost = (remotiveJob: RemotiveJobPost): JobPost => {
+    return {
+        id: `remotive:${remotiveJob.id}`,
+        source: "remotive",
+        title: remotiveJob.title,
+        companyName: remotiveJob.company_name,
+        description: stripHTMLTags(remotiveJob.description),
+        location: remotiveJob.candidate_required_location,
+        category: remotiveJob.category,
+        url: remotiveJob.url,
+        jobType: remotiveJob.job_type,
+        postedAt: new Date(remotiveJob.publication_date),
+        tags: remotiveJob.tags,
+        salary: remotiveJob.salary || "Not disclosed",
+        companyLogo: remotiveJob.company_logo || undefined
+    }
 }

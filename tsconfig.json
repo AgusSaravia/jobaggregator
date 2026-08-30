@@ -9,6 +9,8 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
+    "noEmitOnError": true,
+    "preserveWatchOutput": true,
 
     "isolatedModules": true,
     "verbatimModuleSyntax": true,

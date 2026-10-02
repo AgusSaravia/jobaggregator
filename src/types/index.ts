@@ -1,5 +1,5 @@
 import { z } from "zod"
-import type { RemotiveApiResponseSchema, RemotiveJobPostSchema } from "../schemas/remotive-schema.js"
+import type { RemotiveApiResponseSchema, RemotiveJobPostSchema } from "../schemas/remotive.schema.js"
 
 export type RemotiveApiResponse = z.infer<typeof RemotiveApiResponseSchema>
 export type RemotiveJobPost = z.infer<typeof RemotiveJobPostSchema>

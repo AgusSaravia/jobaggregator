@@ -1,6 +1,6 @@
 import z from "zod"
 import { stripHTMLTags } from "../helpers/text/strip-html.js"
-import { RemotiveApiResponseSchema, RemotiveJobPostSchema } from "../schemas/remotive-schema.js"
+import { RemotiveApiResponseSchema, RemotiveJobPostSchema } from "../schemas/remotive.schema.js"
 import { fetchListings } from "../helpers/http/fetch-listings.js"
 import type { JobPost, RemotiveJobPost } from "../types/index.js"
 const REMOTIVE_CATEGORY = "software-dev"

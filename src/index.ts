@@ -1,12 +1,11 @@
 import http from "node:http"
-import { getRemotiveJobs } from "./services/remotive.js"
+import { getRemotiveJobs } from "./services/remotive.service.js"
 const urls = {
     "Remotive": "https://remotive.com/api/remote-jobs?category=software-dev&limit=5",
     "Arbeitnow": "https://www.arbeitnow.com/api/job-board-api",
     "RemoteOK": "https://remoteok.com/api",
     "HackerNews": "https://hn.algolia.com/api/v1/search?query=who+is+hiring&tags=story&hitsPerPage=1"
 }
-
 
 const server = http.createServer(async (req, res) => {
     try {

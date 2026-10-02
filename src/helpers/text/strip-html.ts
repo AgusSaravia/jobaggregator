@@ -1,7 +1,5 @@
 import { htmlToText } from "html-to-text"
 
-
-
 export const stripHTMLTags = (textToStrip: string): string => {
     return htmlToText(textToStrip, {
         wordwrap: false,

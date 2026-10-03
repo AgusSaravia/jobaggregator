@@ -1,2 +1,6 @@
 node_modules/*
 dist/*
+Remotive-example.json
+*learning/
+.vscode
+.DS_Store

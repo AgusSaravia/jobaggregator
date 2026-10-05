@@ -1,15 +1,27 @@
 import http from "node:http"
 import { getRemotiveJobs } from "./services/remotive.service.js"
+import { getRemoteOkJobs } from "./services/remoteok.service.js"
 const urls = {
     "Remotive": "https://remotive.com/api/remote-jobs?category=software-dev&limit=5",
-    "Arbeitnow": "https://www.arbeitnow.com/api/job-board-api",
     "RemoteOK": "https://remoteok.com/api",
     "HackerNews": "https://hn.algolia.com/api/v1/search?query=who+is+hiring&tags=story&hitsPerPage=1"
 }
 
 const server = http.createServer(async (req, res) => {
     try {
-        const remotiveJob = await getRemotiveJobs()
+        const jobResults = await Promise.allSettled([
+            getRemoteOkJobs(),
+            getRemotiveJobs()
+        ])
+        const toBeShown = []
+        for (const result of jobResults) {
+            if (result.status === "fulfilled") {
+                toBeShown.push(...result.value)
+            } else {
+                console.error(result.reason)  
+            }
+        }
+
 
         res.writeHead(200, {
             "content-type": "application/json"
@@ -17,7 +29,8 @@ const server = http.createServer(async (req, res) => {
 
         res.end(
             JSON.stringify({
-                remotiveJob
+                jobs: toBeShown,
+                jobCount: toBeShown.length
             })
         )
     } catch (error) {

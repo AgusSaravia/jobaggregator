@@ -13,7 +13,7 @@ const CACHE_OPTIONS = {
 }
 const FAILED_CACHE_OPTIONS = {
     ttlSeconds: 60,
-    maxSize: 500
+    maxSize: 250
 }
 const key = `remotiveCache|${REMOTIVE_CATEGORY}`
 
@@ -74,6 +74,6 @@ const remotiveJobToJobPost = (remotiveJob: RemotiveJobPost): JobPost => {
         postedAt: new Date(remotiveJob.publication_date),
         tags: remotiveJob.tags,
         salary: remotiveJob.salary || "Not disclosed",
-        companyLogo: remotiveJob.company_logo || undefined
+        companyLogo: remotiveJob.company_logo
     }
 }
